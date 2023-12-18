@@ -39,7 +39,7 @@ export const Card: FC<CardProps> = ({
     <div
       onMouseOver={toggleMouseOver}
       onMouseOut={toggleMouseOver}
-      className=" bg-white border border-black basis-80 object-cover rounded ml-5 mb-6 cursor-pointer relative"
+      className=" bg-white border border-black basis-80 object-cover rounded ml-5 mb-6 cursor-pointer relative flex flex-col"
       onClick={!mouseOver ? onFilmClick : () => {}}>
       {mouseOver && (
         <div
@@ -61,11 +61,11 @@ export const Card: FC<CardProps> = ({
         alt={title}
       />
 
-      <div className="flex flex-col p-5 max-w-xs">
-        <span className="text-extrabold text-xl text-rose-400">
+      <div className="flex flex-col p-5 max-w-xs h-full">
+        <span className="text-extrabold text-xl text-rose-400 title">
           {title} {year}
         </span>
-        <span>{description?.slice(0, 60)}...</span>
+        <span className="description">{description}</span>
         <span className="mt-auto font-extrabold">{genre}</span>
       </div>
     </div>

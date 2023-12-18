@@ -51,3 +51,13 @@
 .Ob1127{
     background-color: #0b1127;
 }
+
+.description{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+}
+
+ .title{height: 56px;}
