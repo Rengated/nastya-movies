@@ -36,7 +36,7 @@ export default function Home() {
       }}>
       <Header />
       {!loading ? (
-        <main className="min-h-screen flex justify-center">
+        <main className="min-h-screen flex justify-center px-5">
           <section className="flex flex-col items-center container">
             <div className="flex items-center  w-full mb-7  justify-end">
               <h1
@@ -61,22 +61,26 @@ export default function Home() {
                 />
               ))}
             </div>
-            <ResponsivePagination
-              maxWidth={600}
-              previousLabel="<"
-              activeItemClassName={`${
-                currentTheme == "black" ? "active__item_black" : "active__item"
-              }`}
-              nextLabel=">"
-              pageLinkClassName={`p-3 bg-transparent border-none ${
-                currentTheme == "black"
-                  ? "text-gray-500 hover:text-white"
-                  : "text-gray-400 hover:text-black"
-              }`}
-              current={currentPage}
-              total={total}
-              onPageChange={setCurrentPage}
-            />
+            <div
+              style={{ maxWidth: "600px", width: "100%", padding: "0px 30px" }}>
+              <ResponsivePagination
+                previousLabel="<"
+                activeItemClassName={`${
+                  currentTheme == "black"
+                    ? "active__item_black"
+                    : "active__item"
+                }`}
+                nextLabel=">"
+                pageLinkClassName={`p-3 bg-transparent border-none ${
+                  currentTheme == "black"
+                    ? "text-gray-500 hover:text-white"
+                    : "text-gray-400 hover:text-black"
+                }`}
+                current={currentPage}
+                total={total}
+                onPageChange={setCurrentPage}
+              />
+            </div>
           </section>
         </main>
       ) : (

@@ -9,7 +9,7 @@ export const Header: FC = () => {
 
   return (
     <header
-      className={`flex items-center py-10 w-full  justify-center items-center  top-0 left-0 ${
+      className={`flex items-center py-10 w-full  justify-center items-center  top-0 left-0 px-5 ${
         currentTheme == "black" ? "text-white" : "text-black"
       }`}
       style={{ zIndex: 6 }}>
