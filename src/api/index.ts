@@ -46,7 +46,7 @@ export const getFilms = async (currentPage: string) => {
       page_count: number;
       movies: MovieList[];
     };
-  }>(`list_movies.json?page=${currentPage}&limit=${20}`);
+  }>(`list_movies.json?page=${currentPage}&limit=${10}`);
   return response.data.data;
 };
 

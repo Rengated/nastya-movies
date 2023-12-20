@@ -6,6 +6,7 @@ import { Header } from "@/components/Header/Header";
 import { Theme } from "@/store/theme";
 import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/minimal.css";
+import { Footer } from "@/components/Footer/Footer";
 
 export default function Home() {
   const [films, setFilms] = useState([]);
@@ -29,31 +30,23 @@ export default function Home() {
 
   return (
     <div
-      className={`pt-20 ${currentTheme == "black" ? "Ob1127" : "A4C8F2"} bg`}>
-      <Header arrowBack={false} />
+      className={`bg ${currentTheme == "black" ? "bg_black" : ""}`}
+      style={{
+        backgroundColor: `${currentTheme == "black" ? "#484848" : "#F1F1F1"}`,
+      }}>
+      <Header />
       {!loading ? (
         <main className="min-h-screen flex justify-center">
-          <section className="flex flex-col items-center container py-20">
-            <div className="flex items-center-center w-full mb-10 flex-col">
+          <section className="flex flex-col items-center container">
+            <div className="flex items-center  w-full mb-7  justify-end">
               <h1
-                className={`text-3xl  mx-auto justify-center ${
-                  currentTheme == "black" ? "text-rose-300" : "CE007C"
-                } mb-2 font-extrabold`}>
-                FILMS
+                className={`text-3xl ${
+                  currentTheme == "black" ? "text-white" : "text-black"
+                }`}>
+                Film List
               </h1>
-              <div className="flex justify-center items-center">
-                <p className="text-white font-extrabold">
-                  Show films only with description
-                  <input
-                    type="checkbox"
-                    className="ml-4 scale-150"
-                    defaultChecked={checked}
-                    onChange={() => setChecked((prev) => !prev)}
-                  />
-                </p>
-              </div>
             </div>
-            <div className="flex flex-wrap justify-center mb-20">
+            <div className="flex flex-wrap justify-center mb-10">
               {films?.map((item: MovieList, index) => (
                 <Card
                   key={index}
@@ -69,8 +62,17 @@ export default function Home() {
               ))}
             </div>
             <ResponsivePagination
-              maxWidth={350}
-              pageLinkClassName="bg-white p-3 text-black border-white border-1"
+              maxWidth={600}
+              previousLabel="<"
+              activeItemClassName={`${
+                currentTheme == "black" ? "active__item_black" : "active__item"
+              }`}
+              nextLabel=">"
+              pageLinkClassName={`p-3 bg-transparent border-none ${
+                currentTheme == "black"
+                  ? "text-gray-500 hover:text-white"
+                  : "text-gray-400 hover:text-black"
+              }`}
               current={currentPage}
               total={total}
               onPageChange={setCurrentPage}
@@ -83,11 +85,12 @@ export default function Home() {
             height="300"
             width="300"
             radius="9"
-            color="#4d50bf"
+            color="black"
             ariaLabel="loading"
           />
         </div>
       )}
+      <Footer />
     </div>
   );
 }

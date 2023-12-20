@@ -2,26 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+    font-family: 'Roboto', sans-serif;
+}
  
-.active a{
-    background: black;;
+
+.active__item a{
+    color: black;
+}
+
+.active__item_black a{
     color: white;
 }
 
-.page-item:hover a{
-    background: black;
-    color: white;
-}
-
-.page-item a{
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+.page-item {
+    font-size: 25px;
+     
 }
 
 .bg{
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url('../../public/static/background.png');
+}
+
+.bg_black{
+    background-blend-mode: difference;
 }
 
 .-z-index-1{
@@ -31,33 +37,11 @@
 .z-index-5{
     z-index: 5;
 }
-
-.header-bg{
-    background: #1e3154;
-}
-
-.A4C8F2{
-    background-color: #A4C8F2;
-}
-
-.A638EC0{
-    background-color: #638EC0;
+ 
+.bg-movie{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('../../public/static/bg-movie.png');
+    background-position: bottom;
 
 }
-.CE007C{
-    color: #CE007C;
-}
-
-.Ob1127{
-    background-color: #0b1127;
-}
-
-.description{
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-
-}
-
- .title{height: 56px;}

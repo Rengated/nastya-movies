@@ -8,10 +8,14 @@ import { useComments } from "../../hooks/useComments";
 import { Header } from "@/components/Header/Header";
 import { Theme } from "@/store/theme";
 import { useRouter } from "next/router";
+import { Footer } from "@/components/Footer/Footer";
 import cd from "../../../public/static/cd.png";
 import file from "../../../public/static/file.png";
 import res from "../../../public/static/res.png";
 import Image from "next/image";
+import star from "../../../public/static/star.png";
+import arrow from "../../../public/static/arrow.png";
+import arrowWhite from "../../../public/static/arrow-white.png";
 
 const Details: FC = () => {
   const [movieDetails, setMovieDetails] = useState<MovieList>();
@@ -35,6 +39,10 @@ const Details: FC = () => {
     setComment({ name: "", text: "" });
   };
 
+  const onBackClick = () => {
+    router.push("/");
+  };
+
   useEffect(() => {
     const fetch = async () => {
       if (id) {
@@ -49,93 +57,98 @@ const Details: FC = () => {
 
   return (
     <div
-      className={`py-20 ${currentTheme == "black" ? "Ob1127" : "A4C8F2"} bg`}>
-      <Header arrowBack={true} />
+      className={`bg-movie ${currentTheme == "black" ? "bg_black" : ""}`}
+      style={{
+        backgroundColor: `${currentTheme == "black" ? "#484848" : "#F1F1F1"}`,
+        color: `${currentTheme == "black" ? "#E0E0E0" : "#484848"}`,
+      }}>
+      <Header />
       {!loading ? (
         <section className="min-h-screen flex items-center flex-col pb-20 px-4 relative">
-          <Image
-            src={movieDetails?.background_image}
-            width={900}
-            height={500}
-            alt="bg"
-            style={{ maxHeight: "730px", height: "730px", objectFit: "cover" }}
-            className="absolute  opacity-60 w-full brightness-50 p-10"
-          />
-          <div className="container py-20 flex flex-col lg:flex-row items-start">
+          <div className="container flex flex-col lg:flex-row items-start">
             <div>
-              <div
-                style={{
-                  minWidth: "300px",
-                  width: "100%",
-                  maxWidth: "400px",
-                  minHeight: "600px",
-                  position: "relative",
-                }}
-                className="mb-5">
+              <div className="mb-5 flex flex-col">
+                <button
+                  className="text-2xl mb-3 ml-auto"
+                  onClick={onBackClick}>
+                  Back
+                </button>
                 <Image
-                  layout="fill"
+                  src={currentTheme == "black" ? arrowWhite : arrow}
+                  className={`mb-10`}
+                  alt="arrow"
+                />
+                <Image
                   loading="lazy"
+                  width={460}
+                  height={600}
                   src={movieDetails?.large_cover_image || ""}
                   alt={movieDetails?.title || ""}
                 />
               </div>
-              <div className="flex justify-between">
+            </div>
+
+            <div className="flex  lg:pl-28 flex-col w-full z-index-5 pt-24">
+              <p className="text-4xl mb-2">{movieDetails?.title}</p>
+              <div className="flex  flex-col">
+                <div className="flex mb-4">
+                  <p className="text-xl  mr-4">{movieDetails?.year}</p>
+                  <div className="flex items-center">
+                    <p className="text-xl mr-2 ">{movieDetails?.rating}</p>
+                    <Image
+                      src={star}
+                      height={24}
+                      width={24}
+                      alt="star"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-wrap">
+                  {movieDetails?.genres?.map((genre, index) => (
+                    <b
+                      className="bg-stone-700 text-gray-300 p-2 text-base rounded-full mr-2 mb-3"
+                      key={index}>
+                      {genre}
+                    </b>
+                  ))}
+                </div>
+              </div>
+
+              {movieDetails?.description_full && (
+                <p className="text-2xl mb-10">
+                  {movieDetails?.description_full}
+                </p>
+              )}
+
+              <div className="flex ">
                 <button
                   onClick={() => {
                     router.push(movieDetails?.url || "");
                   }}
-                  className="py-4 px-6 lex items-center justify-center border text-white bg-rose-300 font-extrabold cursor-pointer rounded-md hover:bg-rose-600">
+                  className="py-4 mr-6 px-6 flex-items-center justify-center border bg-stone-700  text-gray-300 font-extrabold cursor-pointer rounded-lg hover:bg-stone-400 hover:text-white">
                   Watch now
                 </button>
                 <button
                   onClick={() => {
                     setShowDownlad(true);
                   }}
-                  className="py-4 px-6 flex-items-center justify-center border bg-rose-300 font-extrabold cursor-pointer text-white rounded-md hover:bg-rose-600">
+                  className="py-4 px-6 flex-items-center justify-center border bg-stone-700  text-gray-300 font-extrabold cursor-pointer rounded-lg hover:bg-stone-400 hover:text-white">
                   Download
                 </button>
               </div>
-            </div>
-
-            <div className="flex  lg:pl-20 flex-col w-full z-index-5">
-              <p className="text-white text-3xl mb-2">{movieDetails?.title}</p>
-              {movieDetails?.description_full && (
-                <p className="text-gray-200 text-xl mb-2">
-                  {movieDetails?.description_full}
-                </p>
-              )}
-              <p className="text-white mb-3 text-xl flex flex-wrap  items-center">
-                Genres:
-                {movieDetails?.genres?.map((genre, index) => (
-                  <b
-                    className="bg-rose-200 p-2 text-base rounded-md ml-2 mb-3"
-                    key={index}>
-                    {genre}
-                  </b>
-                ))}
-              </p>
-              <p className="text-white text-xl mb-2">
-                Language: {movieDetails?.language}
-              </p>
-              <p className="text-white text-xl mb-2">
-                Rating: {movieDetails?.rating}
-              </p>
-              <p className="text-white text-xl mb-2">
-                Runtime: {movieDetails?.runtime}
-              </p>
               <div className="flex flex-col mt-5 ">
                 {showDownload &&
                   movieDetails?.torrents?.map((torrent, index) => (
                     <a
                       href={torrent.url}
                       key={index}
-                      className="flex border-2  bg-rose-300 p-5 text-black mb-2 rounded-md items-center border-transparent hover:bg-rose-500">
+                      className="flex border-2  bg-rose-300 p-5   mb-2 rounded-md items-center border-transparent hover:bg-rose-500">
                       <Image
                         src={res}
                         alt="res"
                         className="mr-4 invert"
                       />
-                      <span className="mr-4  font-extrabold text-white">
+                      <span className="mr-4  font-extrabold ">
                         {torrent.quality}
                       </span>
                       <Image
@@ -143,7 +156,7 @@ const Details: FC = () => {
                         alt="file"
                         className="mr-4 invert"
                       />
-                      <span className="mr-4  font-extrabold text-white">
+                      <span className="mr-4  font-extrabold ">
                         {torrent.size}
                       </span>
                       <Image
@@ -151,47 +164,48 @@ const Details: FC = () => {
                         alt="cd"
                         className="invert"
                       />
-                      <span className=" font-extrabold text-white">
-                        {torrent.type}
-                      </span>
+                      <span className="font-extrabold">{torrent.type}</span>
                     </a>
                   ))}
               </div>
             </div>
           </div>
-          <div className="container flex flex-col">
-            <p className="text-3xl text-rose-500 mb-5">Comments</p>
-            <p className="text-white mb-2">Name</p>
+          <div className="container flex flex-col mt-32">
+            <p className="text-3xl   mb-5">Comments</p>
+            <p className="  mb-2">Name</p>
             <input
               name="name"
               onChange={onCommentChange}
               value={comment.name}
               type="text"
-              className="w-80 bg-transparent border-2 p-2 mb-2 rounded-md text-white"
+              className="w-80 bg-white border-2 p-2 mb-2 rounded-md "
             />
-            <p className="text-white mb-2">Comment</p>
+            <p className=" mb-2">Comment</p>
             <textarea
               value={comment.text}
               onChange={onCommentChange}
               name="text"
-              className="w-full bg-transparent border-2 p-2 rounded-md text-white"
+              className="w-full bg-white border-2 p-2 rounded-md"
             />
             <button
               onClick={onSendComment}
-              className="ml-auto text-white border-2 rounded-md p-3 mt-3 hover:bg-black">
+              className="ml-auto border-2 rounded-md p-3 mt-3 bg-stone-700 hover:bg-stone-400 text-gray-300 hover:text-white mb-4          
+              ">
               Send
             </button>
-            <div className="flex flex-col mt-10">
+            <div className="flex flex-col">
               {comments &&
                 comments?.map((comment, index) => (
                   <div
                     key={index}
-                    className="flex flex-col border bg-gray-800 w-full p-5 text-white rounded-md mb-3">
-                    <p className="text-xl extrabold mb-2">{comment.name}</p>
+                    className="flex flex-col border bg-white w-full p-5 text-white rounded-md mb-3">
+                    <p className="text-xl extrabold mb-2 text-black">
+                      {comment.name}
+                    </p>
                     <p className="text-gray-500">{comment.text}</p>
                     <button
                       onClick={() => deleteComment(comment)}
-                      className="ml-auto font-extrabold hover:text-rose-200">
+                      className="ml-auto font-extrabold text-black">
                       DELETE
                     </button>
                   </div>
@@ -210,6 +224,7 @@ const Details: FC = () => {
           />
         </div>
       )}
+      <Footer />
     </div>
   );
 };
