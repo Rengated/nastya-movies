@@ -46,7 +46,7 @@ export default function Home() {
                 Film List
               </h1>
             </div>
-            <div className="flex flex-wrap justify-center mb-10">
+            <div className="flex flex-wrap justify-center mb-10 max-w-6xl">
               {films?.map((item: MovieList, index) => (
                 <Card
                   key={index}
