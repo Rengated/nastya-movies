@@ -25,7 +25,7 @@ const Details: FC = () => {
     text: "",
   });
   const id = useParams()?.id;
-  const [showDownload, setShowDownlad] = useState(false);
+
   const { comments, updateComments, deleteComment } = useComments(id);
   const { currentTheme } = useContext(Theme);
   const router = useRouter();
@@ -37,6 +37,10 @@ const Details: FC = () => {
   const onSendComment = () => {
     updateComments(id, comment);
     setComment({ name: "", text: "" });
+  };
+
+  const downloadFilm = () => {
+    router.push(movieDetails?.torrents[0]?.url);
   };
 
   const onBackClick = () => {
@@ -129,44 +133,10 @@ const Details: FC = () => {
                   Watch now
                 </button>
                 <button
-                  onClick={() => {
-                    setShowDownlad(true);
-                  }}
+                  onClick={downloadFilm}
                   className="py-4 px-6 flex-items-center justify-center border bg-stone-700  text-gray-300 font-extrabold cursor-pointer rounded-lg hover:bg-stone-400 hover:text-white">
                   Download
                 </button>
-              </div>
-              <div className="flex flex-col mt-5 ">
-                {showDownload &&
-                  movieDetails?.torrents?.map((torrent, index) => (
-                    <a
-                      href={torrent.url}
-                      key={index}
-                      className="flex border-2  bg-rose-300 p-5   mb-2 rounded-md items-center border-transparent hover:bg-rose-500">
-                      <Image
-                        src={res}
-                        alt="res"
-                        className="mr-4 invert"
-                      />
-                      <span className="mr-4  font-extrabold ">
-                        {torrent.quality}
-                      </span>
-                      <Image
-                        src={file}
-                        alt="file"
-                        className="mr-4 invert"
-                      />
-                      <span className="mr-4  font-extrabold ">
-                        {torrent.size}
-                      </span>
-                      <Image
-                        src={cd}
-                        alt="cd"
-                        className="invert"
-                      />
-                      <span className="font-extrabold">{torrent.type}</span>
-                    </a>
-                  ))}
               </div>
             </div>
           </div>
@@ -219,7 +189,7 @@ const Details: FC = () => {
             height="80"
             width="80"
             radius="9"
-            color="#4d50bf"
+            color="black"
             ariaLabel="loading"
           />
         </div>
