@@ -80,7 +80,7 @@ const Details: FC = () => {
                 <Image
                   onClick={onBackClick}
                   src={currentTheme == "black" ? arrowWhite : arrow}
-                  className={`mb-10`}
+                  className={`mb-10 p-5 cursor-pointer`}
                   alt="arrow"
                 />
                 <Image
