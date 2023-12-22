@@ -165,7 +165,7 @@ const Details: FC = () => {
               Send
             </button>
             <div className="flex flex-col">
-              {comments &&
+              {comments.length > 0 ? (
                 comments?.map((comment, index) => (
                   <div
                     key={index}
@@ -180,7 +180,10 @@ const Details: FC = () => {
                       DELETE
                     </button>
                   </div>
-                ))}
+                ))
+              ) : (
+                <p className="text-3xl">Be the first to comment</p>
+              )}
             </div>
           </div>
         </section>
@@ -189,7 +192,6 @@ const Details: FC = () => {
           <Audio
             height="80"
             width="80"
-            radius="9"
             color="black"
             ariaLabel="loading"
           />
